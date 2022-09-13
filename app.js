@@ -16,6 +16,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// FEED ROUTES
 app.use("/feeds", feedsRoutes);
 
 // run the server on host: localhost port: 8000
