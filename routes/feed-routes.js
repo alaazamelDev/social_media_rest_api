@@ -6,10 +6,10 @@ const feedsController = require("../controllers/feeds-controller");
 // create new Router Instance
 const router = Router();
 
-// GET => /posts/
-router.get("/", feedsController.index);
+// GET => /feed/posts/
+router.get("/posts", feedsController.index);
 
-// POST => /posts/
-router.post("/", feedsController.store);
+// POST => /feed/post/
+router.post("/post", feedsController.store);
 
 module.exports = router;
