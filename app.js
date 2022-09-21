@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 // add body parser to parse incoming requests into application/json
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // FEED ROUTES
