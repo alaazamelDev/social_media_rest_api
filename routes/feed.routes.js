@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const feedsController = require("../controllers/feeds-controller");
+const validator = require("express-validator");
 
 //! feed api endpoints
 
@@ -10,6 +11,13 @@ const router = Router();
 router.get("/posts", feedsController.index);
 
 // POST => /feed/post/
-router.post("/post", feedsController.store);
+router.post(
+  "/post",
+  [
+    validator.body("title").trim().isLength({ min: 5 }),
+    validator.body("content").trim().isLength({ min: 5 }),
+  ],
+  feedsController.store
+);
 
 module.exports = router;

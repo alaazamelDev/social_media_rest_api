@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator");
+
 exports.index = (req, res, next) => {
   return res.json({
     message: "This is the message that you have to read.",
@@ -16,6 +18,16 @@ exports.index = (req, res, next) => {
 };
 
 exports.store = (req, res, next) => {
+  // handle validation result
+  const errors = validationResult(req);
+
+  if (errors) {
+    return res.status(422).json({
+      message: "Please validate your input.",
+      errors: errors.array(),
+    });
+  }
+
   // get the data out of th request body
   console.log(req.body);
   const title = req.body.title;

@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const feedRoutes = require("./routes/feed-routes");
+const feedRoutes = require("./routes/feed.routes");
+const mongoose = require("mongoose");
 
 // create an express app
 const app = express();
@@ -27,5 +28,14 @@ app.use(bodyParser.json());
 // FEED ROUTES
 app.use("/feed", feedRoutes);
 
-// run the server on host: localhost port: 8000
-app.listen(8000);
+// initiailize database connection
+mongoose
+  .connect("mongodb://localhost:27017")
+  .then((result) => {
+    // run the server on host: localhost port: 8000
+    app.listen(8000);
+    console.log("Connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
