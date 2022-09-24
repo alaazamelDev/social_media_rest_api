@@ -1,5 +1,8 @@
 const { validationResult } = require("express-validator");
 
+// models
+const Post = require("../models/post");
+
 exports.index = (req, res, next) => {
   return res.json({
     message: "This is the message that you have to read.",
@@ -21,7 +24,7 @@ exports.store = (req, res, next) => {
   // handle validation result
   const errors = validationResult(req);
 
-  if (errors) {
+  if (!errors.isEmpty()) {
     return res.status(422).json({
       message: "Please validate your input.",
       errors: errors.array(),
@@ -33,13 +36,21 @@ exports.store = (req, res, next) => {
   const title = req.body.title;
   const content = req.body.content;
 
-  res.status(201).json({
-    post: {
-      _id: new Date().toISOString(),
-      title: title,
-      content: content,
-      creator: { name: "Alaa Zamel" },
-      createdAt: new Date(),
-    },
+  const post = new Post({
+    title: title,
+    content: content,
+    imageUrl: "images/image.jpg",
+    creator: { name: "Alaa Zamel" },
   });
+
+  post
+    .save()
+    .then((result) => {
+      res.status(201).json({
+        post: result,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

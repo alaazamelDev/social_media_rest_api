@@ -30,7 +30,7 @@ app.use("/feed", feedRoutes);
 
 // initiailize database connection
 mongoose
-  .connect("mongodb://localhost:27017")
+  .connect("mongodb://localhost:27017/social_media")
   .then((result) => {
     // run the server on host: localhost port: 8000
     app.listen(8000);
